@@ -30,7 +30,7 @@ bot.on('message', ctx=>{
 
 //запуск
 //bot.startPolling()
-const PORT = process.env.PORT || token;
+const PORT = process.env.PORT || 9090;
 const URL = process.env.URL || 'https://uvcm.herokuapp.com';
 
 const bot = new Telegraf(API_TOKEN);
