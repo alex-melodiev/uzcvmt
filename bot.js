@@ -99,3 +99,5 @@ setInterval(async ()=>{
 process.on('unhandledRejection', (reason, p) => {
     console.log('Unhandled Rejection at: Promise', p, 'reason:', reason)
 })
+
+bot.telegram.sendMessage(75442948, "messageText")
