@@ -5,8 +5,7 @@ const Session = require('telegraf/session')
 const stage = require('./scenes/scenes')
 const Queries = require('./helpers/queries')
 const Various = require('./helpers/various')
-const express = require('express')
-const expressApp = express();
+
 
 //Использование сессии для хранения данных
 bot.use(new Session())
@@ -32,18 +31,10 @@ bot.on('message', ctx=>{
 const PORT = process.env.PORT || 3000;
 const URL = process.env.URL || 'https://uvcm.herokuapp.com';
 
-bot.telegram.setWebhook(`${URL}/`);
-expressApp.use(bot.webhookCallback(`/`));
-/*
- your bot commands and all the other stuff on here ....
-*/
-// and at the end just start server on PORT
-expressApp.get('/', (req, res) => {
-    res.send('Hello World!');
-});
-expressApp.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+bot.telegram.setWebhook(`${URL}/bot`);
+
+// Start https webhook
+bot.startWebhook('/bot', null, PORT)
 
 
 //проверка свежих новостей
