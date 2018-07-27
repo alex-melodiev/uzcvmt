@@ -42,7 +42,7 @@ expressApp.get('/', (req, res) => {
     res.send('Hello World!');
 });
 expressApp.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on port ${PORT} adress ${URL}`);
 });
 
 
