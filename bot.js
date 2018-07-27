@@ -31,8 +31,8 @@ bot.on('message', ctx=>{
 //запуск
 //bot.startPolling()
 bot.telegram.setWebhook('https://uvcm.herokuapp.com/')
-
-bot.startWebhook('/', null, 88)
+var port = process.env.PORT || 3000; 
+bot.startWebhook('/', null, port)
 
 
 //проверка свежих новостей
