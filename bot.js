@@ -31,11 +31,12 @@ bot.on('message', ctx=>{
 const PORT = process.env.PORT || 3000;
 const URL = process.env.URL || 'https://uvcm.herokuapp.com';
 
+bot.webhookReply = false;
 bot.telegram.setWebhook(`${URL}/bot`);
 
 // Start https webhook
 bot.startWebhook('/bot', null, PORT)
-
+bot.webhookReply = false;
 
 //проверка свежих новостей
 setInterval(async ()=>{
