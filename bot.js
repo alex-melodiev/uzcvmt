@@ -34,7 +34,7 @@ const PORT = process.env.PORT || 9090;
 const URL = process.env.URL || 'https://uvcm.herokuapp.com';
 
 bot.telegram.setWebhook(`${URL}/bot${token}`);
-bot.startWebhook(/bot${token}, null, PORT)
+bot.startWebhook(`/bot${token}, null, PORT`)
 
 
 //проверка свежих новостей
