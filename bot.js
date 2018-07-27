@@ -30,9 +30,12 @@ bot.on('message', ctx=>{
 
 //запуск
 //bot.startPolling()
-bot.telegram.setWebhook('https://uvcm.herokuapp.com/')
-var port = process.env.PORT || 5000; 
-bot.startWebhook('/', null, port)
+const PORT = process.env.PORT || token;
+const URL = process.env.URL || 'https://uvcm.herokuapp.com';
+
+const bot = new Telegraf(API_TOKEN);
+bot.telegram.setWebhook(${URL}/bot${API_TOKEN});
+bot.startWebhook(/bot${API_TOKEN}, null, PORT)
 
 
 //проверка свежих новостей
