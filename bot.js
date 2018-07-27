@@ -32,7 +32,7 @@ const PORT = process.env.PORT || 3000;
 const URL = process.env.URL || 'https://uvcm.herokuapp.com';
 
 bot.webhookReply = false;
-bot.telegram.setWebhook(`${URL}/bot`);
+bot.telegram.setWebhook(`${URL}/bot`).catch((err) => console.log(err));
 
 // Start https webhook
 bot.startWebhook('/bot', null, PORT)
