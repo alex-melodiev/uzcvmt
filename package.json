@@ -1,0 +1,23 @@
+{
+  "name": "infobot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bot.js",
+  "scripts": {
+    "start": "nodemon bot.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@admin-interface/core": "^0.1.30",
+    "@admin-interface/express": "^0.1.32",
+    "docx-pdf": "0.0.1",
+    "docxtemplater": "^3.6.6",
+    "jszip": "^2.6.1",
+    "node-zip": "^1.1.1",
+    "office2pdf": "0.0.2",
+    "request": "^2.87.0",
+    "request-promise": "^4.2.2",
+    "telegraf": "^3.21.2"
+  }
+}
