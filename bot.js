@@ -5,8 +5,7 @@ const Session = require('telegraf/session')
 const stage = require('./scenes/scenes')
 const Queries = require('./helpers/queries')
 const Various = require('./helpers/various')
-const express = require('express')
-const expressApp = express();
+
 
 //Использование сессии для хранения данных
 bot.use(new Session())
@@ -18,8 +17,7 @@ bot.use(stage.middleware())
 //реакция на команду start
 bot.command('start',ctx=>{
     //переход к сценарию
-    ctx.scene.enter('helloScene');
-    console.log('Bot start');
+    ctx.scene.enter('helloScene')
 })
 
 
@@ -28,25 +26,14 @@ bot.on('message', ctx=>{
     if(ctx.scene.current === null){
         ctx.scene.enter('helloScene')
     }
-    console.log('Bot message');
 })
 
-const PORT = process.env.PORT || 3000;
-const URL = process.env.URL || 'https://uvcm.herokuapp.com';
+//запуск
+//bot.startPolling()
+bot.telegram.setWebhook('https://uvcm.herokuapp.com/bot')
 
-bot.telegram.setWebhook(`${URL}/bot`);
-expressApp.use(bot.webhookCallback(`/bot`));
-/*
- your bot commands and all the other stuff on here ....
-*/
-// and at the end just start server on PORT
-expressApp.get('/', (req, res) => {
-    res.send('Hello World!');
-    console.log('home ');
-});
-expressApp.listen(PORT, () => {
-    console.log(`Server running on port ${PORT} adress ${URL}`);
-});
+// Start https webhook
+bot.startWebhook('/bot', null, 3000)
 
 
 //проверка свежих новостей
@@ -102,5 +89,3 @@ setInterval(async ()=>{
 process.on('unhandledRejection', (reason, p) => {
     console.log('Unhandled Rejection at: Promise', p, 'reason:', reason)
 })
-
-bot.telegram.sendMessage(75442948, "messageText")
