@@ -28,12 +28,13 @@ bot.on('message', ctx=>{
     }
 })
 
-//запуск
-//bot.startPolling()
-bot.telegram.setWebhook('https://uvcm.herokuapp.com/bot')
+const PORT = process.env.PORT || 3000;
+const URL = process.env.URL || 'https://uvcm.herokuapp.com';
+
+bot.telegram.setWebhook(`${URL}/bot`);
 
 // Start https webhook
-bot.startWebhook('/bot', null, 3000)
+bot.startWebhook('/bot', null, PORT)
 
 
 //проверка свежих новостей
