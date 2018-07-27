@@ -18,7 +18,8 @@ bot.use(stage.middleware())
 //реакция на команду start
 bot.command('start',ctx=>{
     //переход к сценарию
-    ctx.scene.enter('helloScene')
+    ctx.scene.enter('helloScene');
+    console.log('Bot start');
 })
 
 
@@ -27,6 +28,7 @@ bot.on('message', ctx=>{
     if(ctx.scene.current === null){
         ctx.scene.enter('helloScene')
     }
+    console.log('Bot message');
 })
 
 const PORT = process.env.PORT || 3000;
@@ -40,6 +42,7 @@ expressApp.use(bot.webhookCallback(`/bot`));
 // and at the end just start server on PORT
 expressApp.get('/', (req, res) => {
     res.send('Hello World!');
+    console.log('home ');
 });
 expressApp.listen(PORT, () => {
     console.log(`Server running on port ${PORT} adress ${URL}`);
