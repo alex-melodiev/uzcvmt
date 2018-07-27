@@ -29,7 +29,10 @@ bot.on('message', ctx=>{
 })
 
 //запуск
-bot.startPolling()
+//bot.startPolling()
+bot.telegram.setWebhook('https://uvcm.herokuapp.com/')
+
+bot.startWebhook('/', null, 88)
 
 
 //проверка свежих новостей
