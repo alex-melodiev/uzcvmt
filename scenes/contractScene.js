@@ -40,7 +40,7 @@ contractScene.on('message',async ctx=>{
 
 
         ctx.telegram.sendDocument(ctx.update.message.from.id,{
-            url:file,
+            source:file,
             filename:'output.docx'
         },{
             caption:Strings.service.messages[lang].contract

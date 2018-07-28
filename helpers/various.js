@@ -56,7 +56,7 @@ module.exports = {
         // buf is a nodejs buffer, you can either write it to a file or do anything else with it.
         fs.writeFileSync(path.resolve(__dirname, 'output.docx'), buf)
 
-        return "http://bot.chekhov.uz/helpers/output.docx"
+        return buf
     },
     //проверка на число
     isNumber:(n) => {
