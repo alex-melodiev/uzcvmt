@@ -57,11 +57,10 @@ complainScene.on('message',async ctx=>{
         let complaint = JSON.parse(ctx.session.complaint)
         complaint.complaint = ctx.update.message.text
         Queries.complaint.create(complaint)
-        ctx.reply(Strings.complain.messages[lang].message_receipt)
-        if(ctx.update.message.text === 'Test text 123'){
-            let a = ctx.session.undef.test
-            ctx.reply(Queries.siteUrl)
-        }
+
+        ctx.session.msgText = Strings.complain.messages[lang].message_receipt
+        ctx.session.reentered = true
+
         delete ctx.session.complaint
         ctx.scene.enter('mainScene')
     }

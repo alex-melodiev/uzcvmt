@@ -47,7 +47,7 @@ module.exports = {
                 documentation:"📄 Нормативно-правовые документы",
                 vacancies:"👨🏻‍💼 Вакансии",
                 contacts:"📞 Контакты",
-                complain:"❗️Пожаловаться",
+                complain:"❗️Подать обращение",
                 requisites:"🏢 ️Реквизиты",
                 language:"Выбрать язык"
             },

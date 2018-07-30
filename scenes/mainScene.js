@@ -19,7 +19,14 @@ const mainScene = new Scene('mainScene')
 //действия при входе
 mainScene.enter(ctx=>{
     const lang = ctx.session.lang
+    if(ctx.session.reentered === undefined)
     ctx.reply(Strings.main.mainKeyboard[lang].message,Markup.keyboard(Keyboards.mainKeyboard(lang)).extra())
+    else{
+        ctx.reply(ctx.session.msgText,Markup.keyboard(Keyboards.mainKeyboard(lang)).extra())
+        delete ctx.session.reentered
+        delete ctx.session.msgText
+    }
+
 })
 
 /*
