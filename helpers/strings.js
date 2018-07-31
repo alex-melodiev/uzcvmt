@@ -81,7 +81,7 @@ module.exports = {
                 cont_name:'Call-center'
             },
             uz:{
-                hello:"1 та топширилган аккумулятор учун ўртача нарх 25 000 сўм",
+                hello:"1 та топширилган аккумулятор учун ўртача нарх 252 000 сўм",
                 req_location:"Жойлашувингизни юборинг",
                 contact_person:"Aloqa uchun shaxs",
                 send_contact:"Алоқа учун рақамни юбориш",
