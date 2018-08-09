@@ -31,18 +31,15 @@ bot.on('message', ctx=>{
 const PORT = process.env.PORT || 3000;
 const URL = process.env.URL || 'https://uvcm.herokuapp.com';
 
-<<<<<<< HEAD
 async function startBot(url,port){
     await bot.telegram.setWebhook(`${url}/bot`)
 
     // Start https webhook
     bot.startWebhook('/bot', null, port)
-=======
-bot.telegram.setWebhook(`${URL}/bot`)
+    bot.telegram.setWebhook(`${URL}/bot`)
     .catch(e=>{
         console.log(e);
     });
->>>>>>> d46594acf1ce655aabdc0da8be129c23d7ac56f7
 
     //проверка свежих новостей
     setInterval(async ()=>{
