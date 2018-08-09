@@ -59,15 +59,21 @@ setInterval(async ()=>{
             if(news[i].title)messageText += '*' + news[i].title + '*\n'
             messageText += news[i].text
 
+
             for(let j in users){
                 try {
                     if (news[i].image) {//если у новости есть изображение, посылаем его
-                        let res = await bot.telegram.sendPhoto(users[j].chatID, news[i].image, {
-                            caption: messageText,
-                            parse_mode: 'Markdown'
-                        })
 
-                        console.log(res)
+                        if(messageText){
+                            let res = await bot.telegram.sendPhoto(users[j].chatID, news[i].image, {
+                                caption: messageText,
+                                parse_mode: 'Markdown'
+                            })
+                        }
+                        else{
+                            let res = await bot.telegram.sendPhoto(users[j].chatID, news[i].image)
+                        }
+
                     }
                     else {//иначе посылаем только текст
                         let res = await bot.telegram.sendMessage(users[j].chatID, messageText, {
