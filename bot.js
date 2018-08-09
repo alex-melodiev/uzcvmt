@@ -34,10 +34,13 @@ bot.on('message', ctx=>{
 
 bot.telegram.setWebhook('https://bot.chekhov.uz/')
     .then((res)=>{
-        bot.startWebhook('', null, 8080)
+
+    })
+    .catch(e=>{
+        
     })
 
-
+bot.startWebhook('', null, 8080)
 
 
 
