@@ -33,7 +33,7 @@ const URL = process.env.URL || 'https://uvcm.herokuapp.com';
 
 bot.telegram.setWebhook(`${URL}/bot`)
     .catch(e=>{
-
+        console.log(e);
     });
 
 // Start https webhook
