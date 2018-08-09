@@ -30,7 +30,7 @@ module.exports = {
     },
     //клавиатура выбора языка
     languageKeyboard: Markup.inlineKeyboard([
-            Markup.callbackButton('🇺🇿 O\'zbek tili', 'uz'),
+            Markup.callbackButton('🇺🇿 Ўзбек тили', 'uz'),
             Markup.callbackButton('🇷🇺 Русский язык', 'ru')
         ]).extra(),
     //главная клавиатура
