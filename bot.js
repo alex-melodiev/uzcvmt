@@ -1,5 +1,5 @@
 const Telegraf = require("telegraf")
-const token = "543247950:AAFQsgv8yXvzDoks3gF8BZsuQJI4xIWD_5Y";
+const token = "658752174:AAGNtHbFQ8gs11G-psgIScKJ5QF9S7Mkabo";
 const bot = new Telegraf(token, { handlerTimeout: 10000 })
 const Session = require('telegraf/session')
 const stage = require('./scenes/scenes')
@@ -28,20 +28,16 @@ bot.on('message', ctx=>{
     }
 })
 
-//запуск
-//bot.startPolling()
+const PORT = process.env.PORT || 3000;
+const URL = process.env.URL || 'https://uvcm.herokuapp.com';
 
-
-bot.telegram.setWebhook('https://bot.chekhov.uz/')
-    .then((res)=>{
-
-    })
+bot.telegram.setWebhook(`${URL}/bot`)
     .catch(e=>{
-        
-    })
 
-bot.startWebhook('', null, 8080)
+    });
 
+// Start https webhook
+bot.startWebhook('/bot', null, PORT)
 
 
 //проверка свежих новостей
@@ -86,6 +82,7 @@ setInterval(async ()=>{
                     continue
                 }
             }
+
 
             //помечаем новость как прочитанную
             news[i].was_sent = '1'
