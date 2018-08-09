@@ -1,5 +1,5 @@
 const Telegraf = require("telegraf")
-const token = "543247950:AAFQsgv8yXvzDoks3gF8BZsuQJI4xIWD_5Y";
+const token = "658752174:AAGNtHbFQ8gs11G-psgIScKJ5QF9S7Mkabo";
 const bot = new Telegraf(token, { handlerTimeout: 10000 })
 const Session = require('telegraf/session')
 const stage = require('./scenes/scenes')
@@ -28,15 +28,15 @@ bot.on('message', ctx=>{
     }
 })
 
-//запуск
-//bot.startPolling()
+const PORT = process.env.PORT || 3000;
+const URL = process.env.URL || 'https://uvcm.herokuapp.com';
 
+bot.webhookReply = false;
+bot.telegram.setWebhook(`${URL}/bot`).catch((err) => console.log(err));
 
-bot.telegram.setWebhook('https://bot.chekhov.uz/')
-
-bot.startWebhook('', null, 8080)
-
-
+// Start https webhook
+bot.startWebhook('/bot', null, PORT)
+bot.webhookReply = false;
 
 //проверка свежих новостей
 setInterval(async ()=>{
@@ -60,19 +60,15 @@ setInterval(async ()=>{
             for(let j in users){
                 try {
                     if (news[i].image) {//если у новости есть изображение, посылаем его
-                        let res = await bot.telegram.sendPhoto(users[j].chatID, news[i].image, {
+                        await bot.telegram.sendPhoto(users[j].chatID, news[i].image, {
                             caption: messageText,
                             parse_mode: 'Markdown'
                         })
-
-                        console.log(res)
                     }
                     else {//иначе посылаем только текст
-                        let res = await bot.telegram.sendMessage(users[j].chatID, messageText, {
+                        await bot.telegram.sendMessage(users[j].chatID, messageText, {
                             parse_mode: 'Markdown'
                         })
-
-                        console.log(res)
                     }
                 }
                 catch(e){
