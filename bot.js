@@ -28,11 +28,11 @@ bot.on('message', ctx => {
 })
 
 
-/*process.env.PORT ||
-* process.env.URL ||
+/*
+*
 * */
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const URL = 'https://uvcm.herokuapp.com';
 
 
