@@ -1,6 +1,6 @@
 const Telegraf = require("telegraf")
 const token = "671670157:AAGsg6zep2t_ec5hNn7WSL-ZKr9860_lTZA";
-const bot = new Telegraf(token, {handlerTimeout: 10000})
+const bot = new Telegraf(token, {handlerTimeout: 3000})
 const Session = require('telegraf/session')
 const stage = require('./scenes/scenes')
 const Queries = require('./helpers/queries')
