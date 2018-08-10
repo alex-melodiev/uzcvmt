@@ -5,7 +5,9 @@ const Session = require('telegraf/session')
 const stage = require('./scenes/scenes')
 const Queries = require('./helpers/queries')
 const Various = require('./helpers/various')
+const express = require('express')
 
+const app = express()
 
 //Использование сессии для хранения данных
 bot.use(Session())
@@ -31,75 +33,75 @@ bot.on('message', ctx => {
 const PORT = process.env.PORT || 3000;
 const URL = 'https://uvcm.herokuapp.com';
 
-
-async function startBot() {
-
-    // Start https webhook
-    bot.startWebhook('/bot', null, PORT)
-
-        //await bot.telegram.setWebhook(`${URL}/bot`)
+bot.telegram.setWebhook(`${URL}/bot${token}`)
+app.use(bot.webhookCallback(`/bot${token}`));
 
 
-    //проверка свежих новостей
-    setInterval(async () => {
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+})
 
-        //получаем новости
-        let news = await Queries.news.getNew()
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+})
 
-        //если они есть
-        if (!Various.isEmpty(news)) {
+//проверка свежих новостей
+setInterval(async () => {
 
-            //получаем юзеров
-            let users = await Queries.user.getAll()
+    //получаем новости
+    let news = await Queries.news.getNew()
 
-            //отправляем каждую новость каждому юзеру
-            for (let i in news) {
-                let messageText = ""
+    //если они есть
+    if (!Various.isEmpty(news)) {
 
-                if (news[i].title) messageText += '*' + news[i].title + '*\n'
-                messageText += news[i].text
+        //получаем юзеров
+        let users = await Queries.user.getAll()
+
+        //отправляем каждую новость каждому юзеру
+        for (let i in news) {
+            let messageText = ""
+
+            if (news[i].title) messageText += '*' + news[i].title + '*\n'
+            messageText += news[i].text
 
 
-                for (let j in users) {
-                    try {
-                        if (news[i].image) {//если у новости есть изображение, посылаем его
+            for (let j in users) {
+                try {
+                    if (news[i].image) {//если у новости есть изображение, посылаем его
 
-                            if (messageText) {
-                                await bot.telegram.sendPhoto(users[j].chatID, news[i].image, {
-                                    caption: messageText,
-                                    parse_mode: 'Markdown'
-                                })
-                            }
-                            else {
-                                await bot.telegram.sendPhoto(users[j].chatID, news[i].image)
-                            }
-
-                        }
-                        else {//иначе посылаем только текст
-                            await bot.telegram.sendMessage(users[j].chatID, messageText, {
+                        if (messageText) {
+                            await bot.telegram.sendPhoto(users[j].chatID, news[i].image, {
+                                caption: messageText,
                                 parse_mode: 'Markdown'
                             })
-
                         }
+                        else {
+                            await bot.telegram.sendPhoto(users[j].chatID, news[i].image)
+                        }
+
                     }
-                    catch (e) {
-                        console.log(e)
+                    else {//иначе посылаем только текст
+                        await bot.telegram.sendMessage(users[j].chatID, messageText, {
+                            parse_mode: 'Markdown'
+                        })
+
                     }
                 }
-
-
-                //помечаем новость как прочитанную
-                news[i].was_sent = '1'
-                Queries.news.update(news[i].id, news[i])
+                catch (e) {
+                    console.log(e)
+                }
             }
 
+
+            //помечаем новость как прочитанную
+            news[i].was_sent = '1'
+            Queries.news.update(news[i].id, news[i])
         }
 
-    }, 60000)
-}
+    }
 
+}, 60000)
 
-startBot()
 
 
 
