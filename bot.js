@@ -33,17 +33,12 @@ bot.on('message', ctx => {
 const PORT = process.env.PORT || 3000;
 const URL = 'https://uvcm.herokuapp.com';
 
-//bot.telegram.setWebhook(`${URL}/bot${token}`)
-app.use(bot.webhookCallback(`/bot${token}`));
+bot.webhookReply = false;
+bot.telegram.setWebhook(`${URL}/bot`).catch((err) => console.log(err));
 
-
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-})
-
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-})
+// Start https webhook
+bot.startWebhook('/bot', null, PORT)
+bot.webhookReply = false;
 
 //проверка свежих новостей
 setInterval(async () => {
