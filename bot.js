@@ -38,12 +38,6 @@ async function startBot() {
     bot.startWebhook('/bot', null, PORT)
     try{
         await bot.telegram.setWebhook(`${URL}/bot`)
-            .catch(e => {
-                console.log(e)
-            })
-
-
-
     }
     catch(e){
         console.log(e)
