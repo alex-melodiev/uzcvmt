@@ -8,7 +8,7 @@ const Various = require('./helpers/various')
 
 
 //Использование сессии для хранения данных
-bot.use(new Session())
+bot.use(Session())
 //использование сцен telegraf
 bot.use(stage.middleware())
 
@@ -34,6 +34,8 @@ const URL = 'https://uvcm.herokuapp.com';
 
 async function startBot() {
 
+    // Start https webhook
+    bot.startWebhook('/bot', null, PORT)
     try{
         await bot.telegram.setWebhook(`${URL}/bot`)
             .catch(e => {
@@ -41,8 +43,7 @@ async function startBot() {
             })
 
 
-        // Start https webhook
-        bot.startWebhook('/bot', null, PORT)
+
     }
     catch(e){
         console.log(e)
