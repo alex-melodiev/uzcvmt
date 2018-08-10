@@ -36,12 +36,8 @@ async function startBot() {
 
     // Start https webhook
     bot.startWebhook('/bot', null, PORT)
-    try{
-        await bot.telegram.setWebhook(`${URL}/bot`)
-    }
-    catch(e){
-        console.log(e)
-    }
+
+        //await bot.telegram.setWebhook(`${URL}/bot`)
 
 
     //проверка свежих новостей
