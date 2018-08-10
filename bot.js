@@ -32,75 +32,83 @@ const PORT = process.env.PORT || 3000;
 const URL = 'https://uvcm.herokuapp.com';
 
 
-bot.telegram.setWebhook(`${URL}/bot`)
-    .then(res=>{
+async function startBot() {
+
+    try{
+        await bot.telegram.setWebhook(`${URL}/bot`)
+            .catch(e => {
+                console.log(e)
+            })
+
+
         // Start https webhook
         bot.startWebhook('/bot', null, PORT)
-
-        //проверка свежих новостей
-        setInterval(async () => {
-
-            //получаем новости
-            let news = await Queries.news.getNew()
-
-            //если они есть
-            if (!Various.isEmpty(news)) {
-
-                //получаем юзеров
-                let users = await Queries.user.getAll()
-
-                //отправляем каждую новость каждому юзеру
-                for (let i in news) {
-                    let messageText = ""
-
-                    if (news[i].title) messageText += '*' + news[i].title + '*\n'
-                    messageText += news[i].text
+    }
+    catch(e){
+        console.log(e)
+    }
 
 
-                    for (let j in users) {
-                        try {
-                            if (news[i].image) {//если у новости есть изображение, посылаем его
+    //проверка свежих новостей
+    setInterval(async () => {
 
-                                if (messageText) {
-                                    let res = await bot.telegram.sendPhoto(users[j].chatID, news[i].image, {
-                                        caption: messageText,
-                                        parse_mode: 'Markdown'
-                                    })
-                                }
-                                else {
-                                    let res = await bot.telegram.sendPhoto(users[j].chatID, news[i].image)
-                                }
+        //получаем новости
+        let news = await Queries.news.getNew()
 
-                            }
-                            else {//иначе посылаем только текст
-                                let res = await bot.telegram.sendMessage(users[j].chatID, messageText, {
+        //если они есть
+        if (!Various.isEmpty(news)) {
+
+            //получаем юзеров
+            let users = await Queries.user.getAll()
+
+            //отправляем каждую новость каждому юзеру
+            for (let i in news) {
+                let messageText = ""
+
+                if (news[i].title) messageText += '*' + news[i].title + '*\n'
+                messageText += news[i].text
+
+
+                for (let j in users) {
+                    try {
+                        if (news[i].image) {//если у новости есть изображение, посылаем его
+
+                            if (messageText) {
+                                await bot.telegram.sendPhoto(users[j].chatID, news[i].image, {
+                                    caption: messageText,
                                     parse_mode: 'Markdown'
                                 })
-
-                                console.log(res)
                             }
+                            else {
+                                await bot.telegram.sendPhoto(users[j].chatID, news[i].image)
+                            }
+
                         }
-                        catch (e) {
-                            console.log(e)
+                        else {//иначе посылаем только текст
+                            await bot.telegram.sendMessage(users[j].chatID, messageText, {
+                                parse_mode: 'Markdown'
+                            })
+
                         }
                     }
-
-
-                    //помечаем новость как прочитанную
-                    news[i].was_sent = '1'
-                    Queries.news.update(news[i].id, news[i])
+                    catch (e) {
+                        console.log(e)
+                    }
                 }
 
+
+                //помечаем новость как прочитанную
+                news[i].was_sent = '1'
+                Queries.news.update(news[i].id, news[i])
             }
 
-        }, 60000)
-    })
-    .catch(e => {
-        console.log(e)
-    })
+        }
+
+    }, 60000)
+}
 
 
-
+startBot()
 
 
 
