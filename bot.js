@@ -5,9 +5,7 @@ const Session = require('telegraf/session')
 const stage = require('./scenes/scenes')
 const Queries = require('./helpers/queries')
 const Various = require('./helpers/various')
-const express = require('express')
 
-const app = express()
 
 //Использование сессии для хранения данных
 bot.use(Session())
@@ -64,7 +62,7 @@ setInterval(async () => {
                 try {
                     if (news[i].image) {//если у новости есть изображение, посылаем его
 
-                        if (messageText) {
+                        if (messageText.length < 200) {
                             await bot.telegram.sendPhoto(users[j].chatID, news[i].image, {
                                 caption: messageText,
                                 parse_mode: 'Markdown'
@@ -72,6 +70,9 @@ setInterval(async () => {
                         }
                         else {
                             await bot.telegram.sendPhoto(users[j].chatID, news[i].image)
+                            await bot.telegram.sendMessage(users[j].chatID,messageText,{
+                                parse_mode: 'Markdown'
+                            })
                         }
 
                     }
